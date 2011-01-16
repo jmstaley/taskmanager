@@ -6,18 +6,27 @@ Replace these with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from taskmanager.models import Project, Task
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
+from datetime import date
 
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
+class ProjectTest(TestCase):
+    def setUp(self):
+        self.project = Project.objects.create(description='this is a test project',
+                                              due_date=date(2001, 12, 30),
+                                              name='test project')
 
->>> 1 + 1 == 2
-True
-"""}
+class TaskTest(TestCase):
+    def setUp(self):
+        self.project = Project.objects.create(description='this is a test project',
+                                              due_date=date(2002, 12, 30),
+                                              name='test project')
 
+        self.task = Task.objects.create(creation_date=date(2001, 12, 30),
+                                        description='this is a test task',
+                                        due_date=date(2002, 1, 1),
+                                        frequency=Task.ONE_OFF,
+                                        project=self.project,
+                                        status=Task.OPEN_STATUS,
+                                        title='test task',
+                                        user='')
