@@ -1,0 +1,20 @@
+[
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "jon", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2011-01-17 00:07:29", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$5d0a4$2e64f70f693844d43778c46aa4b512da8c771a82", 
+      "email": "jon@spandexbob.co.uk", 
+      "date_joined": "2010-11-17 00:09:56"
+    }
+  }
+]

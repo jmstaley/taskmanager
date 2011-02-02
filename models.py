@@ -60,3 +60,15 @@ class Work(models.Model):
     def __unicode__(self):
         return self.creation_date.strftime('%d/%m/%y')
 
+class Organisation(models.Model):
+    """Simple organisation object"""
+    name = models.CharField(max_length=255, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+class UserProfile(models.Model):
+    """Holds data on a user"""
+    user = models.ForeignKey(User, unique=True)
+    phone_number = models.CharField(max_length=255, blank=False)
+    org = models.ForeignKey(Organisation)

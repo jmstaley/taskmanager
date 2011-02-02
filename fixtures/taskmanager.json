@@ -1,0 +1,65 @@
+[
+  {
+    "pk": 1, 
+    "model": "taskmanager.project", 
+    "fields": {
+      "due_date": "2099-01-01", 
+      "description": "This is a test project", 
+      "name": "Test Project"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "taskmanager.task", 
+    "fields": {
+      "status": 1, 
+      "due_date": "2098-01-01", 
+      "description": "This is a test task", 
+      "title": "Test Task", 
+      "creation_date": "2011-02-02", 
+      "project": 1, 
+      "frequency": 0, 
+      "user": 1
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "taskmanager.task", 
+    "fields": {
+      "status": 1, 
+      "due_date": "2098-01-01", 
+      "description": "This is a second task", 
+      "title": "Second Task", 
+      "creation_date": "2011-02-02", 
+      "project": 1, 
+      "frequency": 0, 
+      "user": 1
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "taskmanager.work", 
+    "fields": {
+      "comment": "This some work on a test task", 
+      "task": 1, 
+      "user": 1, 
+      "creation_date": "2011-02-02"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "taskmanager.organisation", 
+    "fields": {
+      "name": "Test Organisation"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "taskmanager.userprofile", 
+    "fields": {
+      "phone_number": "0123456789", 
+      "org": 1, 
+      "user": 1
+    }
+  }
+]

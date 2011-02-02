@@ -1,32 +1,17 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
-from taskmanager.models import Project, Task
+from django.contrib.auth.models import User
+
+from taskmanager.models import Project, Task, Work, Organisation, UserProfile
 
 from datetime import date
 
 class ProjectTest(TestCase):
-    def setUp(self):
-        self.project = Project.objects.create(description='this is a test project',
-                                              due_date=date(2001, 12, 30),
-                                              name='test project')
+    fixtures = ['taskmanager.json', ]
 
-class TaskTest(TestCase):
-    def setUp(self):
-        self.project = Project.objects.create(description='this is a test project',
-                                              due_date=date(2002, 12, 30),
-                                              name='test project')
+    def testName(self):
+        project = Project.objects.get(pk='1')
+        self.assertEqual(project.name, 'Test Project')
 
-        self.task = Task.objects.create(creation_date=date(2001, 12, 30),
-                                        description='this is a test task',
-                                        due_date=date(2002, 1, 1),
-                                        frequency=Task.ONE_OFF,
-                                        project=self.project,
-                                        status=Task.OPEN_STATUS,
-                                        title='test task',
-                                        user='')
+    def testDueDate(self):
+        project = Project.objects.get(pk='1')
+        self.assertEqual(project.due_date, date(2099, 01, 01))
