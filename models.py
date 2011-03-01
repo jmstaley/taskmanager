@@ -10,6 +10,17 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_tasks(self):
+        tasks = Task.objects.filter(project=self)
+        return tasks
+
+class TaskManager(models.Manager):
+    def get_tasks_for_user(self, user):
+        return self.filter(user=user)
+
+    def get_tasks_of_freq(self, freq):
+        return self.filter(frequency=freq)
+
 class Task(models.Model):
     """Represents a piece of work to be done"""
     DAILY = 1
@@ -47,15 +58,23 @@ class Task(models.Model):
     title = models.CharField(max_length=255)
     user = models.ForeignKey(User)
     
+    objects = TaskManager()
+
     def __unicode__(self):
         return self.title
-    
+
+class WorkManager(models.Manager):
+    def get_work_for_task(self, task):
+        return self.filter(task=task)
+
 class Work(models.Model):
     """Work done associated to a task"""
     user = models.ForeignKey(User)
     creation_date = models.DateField(auto_now_add=True, auto_now=True)
     task = models.ForeignKey(Task)
     comment = models.TextField(blank=True)
+
+    objects = WorkManager()
 
     def __unicode__(self):
         return self.creation_date.strftime('%d/%m/%y')
