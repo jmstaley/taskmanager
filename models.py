@@ -60,6 +60,12 @@ class Task(models.Model):
     
     objects = TaskManager()
 
+    class Meta:
+        permissions = (
+            ('can_change_status', 'Can change the status of the task'),
+            ('can_close', 'Can close a task')
+        )
+
     def __unicode__(self):
         return self.title
 

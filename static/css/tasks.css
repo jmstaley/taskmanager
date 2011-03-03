@@ -1,0 +1,16 @@
+body {
+  background-color: #eeeeee;
+}
+
+div.container {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+div.user {
+  text-align: right;
+}
+
+div.footer {
+  text-align: center;
+}

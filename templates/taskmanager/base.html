@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print" />  
+    <!--[if lt IE 8]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="/static/css/tasks.css" type="text/css" />
+    <title>Taskmanager</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header span-24 last">
+        <h1>Taskmanager</h1>
+        <hr />
+      </div>
+      <!-- TODO: only if user is logged in -->
+      <div class="user span-24 last">
+        <a href="#">current user</a>
+        <a href="#">dashboard</a>
+      </div>
+      <div class="content span-24 last">
+        {% block content %}{% endblock %}
+      </div>
+      <div class="footer span-24 last">
+        <hr />
+        <p>Taskmanager &copy; 2011 Jon Staley</p>
+      </div>
+    </div>
+  </body>
+</html>
+
