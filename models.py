@@ -18,6 +18,9 @@ class TaskManager(models.Manager):
     def get_tasks_for_user(self, user):
         return self.filter(user=user)
 
+    def unassigned_tasks(self):
+        return self.filter(user=None)
+
     def get_tasks_of_freq(self, freq):
         return self.filter(frequency=freq)
 
@@ -56,18 +59,23 @@ class Task(models.Model):
     project = models.ForeignKey(Project)
     status = models.IntegerField(choices=STATUS_CHOICES, default=OPEN_STATUS)
     title = models.CharField(max_length=255)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, blank=True, null=True)
+    creator = models.ForeignKey(User, related_name="creator")
     
     objects = TaskManager()
 
     class Meta:
         permissions = (
             ('can_change_status', 'Can change the status of the task'),
-            ('can_close', 'Can close a task')
+            ('can_close', 'Can close a task'),
+            ('can_assign', 'Can assign a task to a user'),
         )
 
     def __unicode__(self):
         return self.title
+
+    def get_status_str(self):
+        return self.STATUS_CHOICES[self.status-1][1]
 
 class WorkManager(models.Manager):
     def get_work_for_task(self, task):

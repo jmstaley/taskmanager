@@ -1,6 +1,19 @@
 {% extends "taskmanager/base.html" %}
 {% block content %}
-<h3>Welcome to taskmanager</h3>
-<p>The online project management site</p>
-<p><a href="#">Login</a></p>
+<form class="span-8 prepend-7 last" action="login/" method="POST">
+  <fieldset>
+    <legend>Login</legend>
+    <div class="formrow">
+      <label for="username">Username</label><br />
+      <input type="text" name="username" class="text" />
+    </div>
+    <div class="formrow">
+      <label>Password</label><br />
+      <input type="password" name="password" class="text" />
+    </div>
+    <div class="formrow">
+      <input type="submit" name="login" value="Login" />
+    </div>
+  </fieldset>
+</form>
 {% endblock %}

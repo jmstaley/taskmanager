@@ -1,4 +1,12 @@
 {% extends "taskmanager/base.html" %}
 {% block content %}
-  <h4>DASHBOARD</h4>
+{% load task_extras %}
+<div id="mytasks" class="span-22 prepend-1 last">
+  <h3>My Tasks</h3>
+  {% show_tasks user_tasks %}
+</div>
+<div id="unassignedtasks" class="span-22 prepend-1 last">
+  <h3>Unassigned Tasks</h3>
+  {% show_tasks unassigned_tasks %}
+</div>
 {% endblock %}

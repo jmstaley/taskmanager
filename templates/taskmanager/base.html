@@ -15,10 +15,20 @@
       </div>
       <!-- TODO: only if user is logged in -->
       <div class="user span-24 last">
-        <a href="#">current user</a>
-        <a href="#">dashboard</a>
+        {% if user.is_authenticated %}
+          <span>{{ user.username }}</span>
+          <a href="{% url taskmanager_dashboard %}">dashboard</a>
+          <a href="{% url taskmanager_logout %}">logout</a>
+        {% endif %}
       </div>
       <div class="content span-24 last">
+        {% if messages %}
+          <div class="error">
+            {% for message in messages %}
+              <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
         {% block content %}{% endblock %}
       </div>
       <div class="footer span-24 last">
