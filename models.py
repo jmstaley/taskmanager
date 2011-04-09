@@ -77,6 +77,10 @@ class Task(models.Model):
     def get_status_str(self):
         return self.STATUS_CHOICES[self.status-1][1]
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('task_detail', (), {'task_id': self.id,})
+
 class WorkManager(models.Manager):
     def get_work_for_task(self, task):
         return self.filter(task=task)

@@ -1,0 +1,10 @@
+{% extends 'taskmanager/base.html' %}
+{% block content %}
+  <div id="taskdetails" class="span-22 prepend-1 last">
+    <h3>{{ task.title }}</h3>
+    <p>Part of {{ task.project.name }} project</p>
+    <p>{{ task.description }}</p>
+    <p>Due: {{ task.due_date }}</p>
+    <p>Created by {{ task.creator.username }} on the {{ task.creation_date }}</p>
+  </div>
+{% endblock %}

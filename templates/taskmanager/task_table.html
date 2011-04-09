@@ -9,7 +9,7 @@
     {% for task in tasks %}
       <tr>
         <td>{{ task.due_date }}</td>
-        <td>{{ task.title }}</td>
+        <td><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></td>
         <td>{{ task.user.username }}</td>
         <td>{{ task.creator.username }}</td>
         <td>{{ task.get_status_str }}</td>
