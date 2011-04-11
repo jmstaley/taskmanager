@@ -9,4 +9,19 @@
   <h3>Unassigned Tasks</h3>
   {% show_tasks unassigned_tasks %}
 </div>
+<div id="projects" class="span-22 prepend-1 last">
+  <h3>Projects</h3>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Due Date</th>
+    </tr>
+    {% for project in projects %}
+      <tr>
+        <td><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></td>
+        <td>{{ project.due_date }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
 {% endblock %}

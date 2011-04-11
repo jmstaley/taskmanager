@@ -1,28 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class ProjectManager(models.Manager):
+    def get_organisation_projects(self, org):
+        return self.filter(organisation=org)
+
 class Project(models.Model):
     """Project for grouping tasks together"""
     description = models.TextField(blank=True)
     due_date = models.DateField(blank=True, null=True)
-    name = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255)
+    organisation = models.ForeignKey('Organisation')
+
+    objects = ProjectManager()
 
     def __unicode__(self):
         return self.name
 
-    def get_tasks(self):
-        tasks = Task.objects.filter(project=self)
-        return tasks
+    @models.permalink
+    def get_absolute_url(self):
+        return ('project_detail', (), {'project_id': self.id,})
 
 class TaskManager(models.Manager):
     def get_tasks_for_user(self, user):
         return self.filter(user=user)
 
-    def unassigned_tasks(self):
-        return self.filter(user=None)
+    def unassigned_tasks(self, org):
+        return self.filter(user=None, project__organisation=org)
 
     def get_tasks_of_freq(self, freq):
         return self.filter(frequency=freq)
+
+    def get_tasks_for_project(self, project_id):
+        return self.filter(project__id=project_id)
 
 class Task(models.Model):
     """Represents a piece of work to be done"""
@@ -56,7 +66,7 @@ class Task(models.Model):
     description = models.TextField(blank=True)
     due_date = models.DateField(blank=True, null=True)
     frequency = models.IntegerField(choices=FREQUENCY_CHOICES, default=ONE_OFF)
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, blank=True, null=True)
     status = models.IntegerField(choices=STATUS_CHOICES, default=OPEN_STATUS)
     title = models.CharField(max_length=255)
     user = models.ForeignKey(User, blank=True, null=True)
@@ -109,3 +119,6 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     phone_number = models.CharField(max_length=255, blank=False)
     org = models.ForeignKey(Organisation)
+
+    def __unicode__(self):
+        return self.user.username

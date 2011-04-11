@@ -1,18 +1,27 @@
+{% extends "taskmanager/base.html" %}
+{% block content %}
+<div id="projectdetails" class="span-22 prepend-1 last">
+  <h3>Project</h3>
+  <p>Due date: {{ project.due_date }}</p>
+  <p>{{ project.description }}</p>
+  <h4>Tasks</h4>
   <table class="tasktable">
     <tr>
       <th>Due date</th>
       <th>Task</th>
       <th>Creator</th>
+      <th>Assigned</th>
       <th>Status</th>
-      <th>Project</th>
     </tr>
     {% for task in tasks %}
       <tr>
         <td>{{ task.due_date }}</td>
         <td><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></td>
         <td>{{ task.creator.username }}</td>
+        <td>{{ task.user.username }}</td>
         <td>{{ task.get_status_str }}</td>
-        <td><a href="{{ task.project.get_absolute_url }}">{{ task.project.name }}</a></td>
       </tr>
     {% endfor %}
   </table>
+</div>
+{% endblock %}

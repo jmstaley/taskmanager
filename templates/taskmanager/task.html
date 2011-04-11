@@ -2,9 +2,17 @@
 {% block content %}
   <div id="taskdetails" class="span-22 prepend-1 last">
     <h3>{{ task.title }}</h3>
-    <p>Part of {{ task.project.name }} project</p>
+    <p>Part of <a href="{{ task.project.get_absolute_url }}">{{ task.project.name }}</a> project</p>
     <p>{{ task.description }}</p>
     <p>Due: {{ task.due_date }}</p>
     <p>Created by {{ task.creator.username }} on the {{ task.creation_date }}</p>
+    <h4>Work</h4>
+    {% for w in work %}
+      <div class="work">
+        <p>Added by: {{ w.user.username }} on {{ w.creation_date }}</p>
+        <p>Comments: </p>
+        <p>{{ w.comment }}</p>
+      </div>
+    {% endfor %}
   </div>
 {% endblock %}
