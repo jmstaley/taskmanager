@@ -1,13 +1,11 @@
-from functools import wraps
-
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseForbidden
 
 from models import Task, Work, Project
+from decorators import can_view_task, can_view_project
     
 def index(request):
     user = request.user
@@ -45,17 +43,6 @@ def dashboard(request):
                                'projects': projects},
                               context_instance = RequestContext(request))
 
-def can_view_project(view, project_id=None):
-    @wraps(view)
-    def inner(request, project_id=None):
-        user_profile = request.user.get_profile()
-        project = Project.objects.get(id=project_id)
-        if not user_profile.org == project.organisation:
-            return HttpResponseForbidden()
-        else:
-            return view(request, project_id=project_id)
-    return inner
-
 @login_required
 @can_view_project
 def project_detail(request, project_id=None):
@@ -65,17 +52,6 @@ def project_detail(request, project_id=None):
                               {'project': project,
                                'tasks': tasks},
                               context_instance = RequestContext(request))
-
-def can_view_task(view, task_id=None):
-    @wraps(view)
-    def inner(request, task_id=None):
-        user_profile = request.user.get_profile()
-        task = Task.objects.get(id=task_id)
-        if not user_profile.org == task.project.organisation:
-           return HttpResponseForbidden()
-        else:
-            return view(request, task_id=task_id)
-    return inner
 
 @login_required
 @can_view_task

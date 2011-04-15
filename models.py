@@ -26,7 +26,7 @@ class TaskManager(models.Manager):
         return self.filter(user=user)
 
     def unassigned_tasks(self, org):
-        return self.filter(user=None, project__organisation=org)
+        return self.filter(user=None, organisation=org)
 
     def get_tasks_of_freq(self, freq):
         return self.filter(frequency=freq)
@@ -71,6 +71,7 @@ class Task(models.Model):
     title = models.CharField(max_length=255)
     user = models.ForeignKey(User, blank=True, null=True)
     creator = models.ForeignKey(User, related_name="creator")
+    organisation = models.ForeignKey('Organisation', blank=True, null=True)
     
     objects = TaskManager()
 
@@ -83,6 +84,11 @@ class Task(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def save(self, force_insert=False, force_update=False):
+        creator_profile = self.creator.get_profile()
+        self.organisation = creator_profile.org
+        super(Task, self).save(force_insert, force_update)
 
     def get_status_str(self):
         return self.STATUS_CHOICES[self.status-1][1]
