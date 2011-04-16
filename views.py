@@ -1,3 +1,5 @@
+import calendar
+from datetime import datetime
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
@@ -63,3 +65,23 @@ def task_detail(request, task_id=None):
                                'work': work},
                               context_instance = RequestContext(request))
 
+def cal_view(request, year=None, month=None):
+    now = datetime.now()
+    today = None
+    if not year:
+        year = now.year
+    if not month:
+        month = now.month
+    if month == now.month:
+        today = now.day
+    cal = calendar.Calendar()
+    month_days = cal.itermonthdays2(year, month)
+    dt = datetime(year, month, 1)
+    map_func = lambda d: (d[0], d[1], Task.objects.filter(due_date=datetime(year, month, d[0])))
+    month_day_tasks = map(map_func, month_days)
+    return render_to_response('taskmanager/calendar.html',
+                              {'day_headers': calendar.day_name,
+                               'month': dt.strftime('%B'),
+                               'today': today,
+                               'month_days': month_day_tasks},
+                              context_instance = RequestContext(request))

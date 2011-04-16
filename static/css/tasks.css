@@ -2,9 +2,32 @@ body {
   background-color: #eeeeee;
 }
 
+h4.month {
+  text-align: center;
+  font-weight: bold;
+}
+
 div.container {
   background-color: #ffffff;
   padding: 5px;
+}
+
+/* calendar */
+div.dayheader {
+  text-align: center;
+}
+
+div.day {
+  border: 1px solid #000000;
+  margin-bottom: 10px;
+}
+
+div.emptyday {
+  border: 1px solid #ffffff;
+}
+
+div.today {
+  background-color: #7DC6FF;
 }
 
 div.user {

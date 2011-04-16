@@ -1,0 +1,18 @@
+{% extends "taskmanager/base.html" %}
+{% block content %}
+  <div id="calendar" class="span-22 prepend-1 last">
+    <h4 class="month">{{ month }}</h4>
+    {% for day in day_headers %}
+      <div class="dayheader span-3 {% if forloop.last %}last{% endif %}">
+        <p>{{ day }}</p>
+      </div>
+    {% endfor %}
+    {% for date, day, tasks in month_days %}
+      <div class="day{% if date == 0 %} emptyday{% endif %} span-3{% if day == 6 %} last{% endif %}{% if today == date %} today{% endif %}">
+        {% if date %}
+          <p>{{ date }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
