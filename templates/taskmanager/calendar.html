@@ -2,6 +2,11 @@
 {% block content %}
   <div id="calendar" class="span-22 prepend-1 last">
     <h4 class="month">{{ month }}</h4>
+    <p>
+      <a href="{% url cal_month_view prev_year prev_month %}">< Prev</a>
+      <a href="{% url taskmanager_cal %}">Today</a>
+      <a href="{% url cal_month_view next_year next_month %}">Next ></a>
+    </p>
     {% for day in day_headers %}
       <div class="dayheader span-3 {% if forloop.last %}last{% endif %}">
         <p>{{ day }}</p>
@@ -10,7 +15,10 @@
     {% for date, day, tasks in month_days %}
       <div class="day{% if date == 0 %} emptyday{% endif %} span-3{% if day == 6 %} last{% endif %}{% if today == date %} today{% endif %}">
         {% if date %}
-          <p>{{ date }}</p>
+          <span>{{ date }}</span>
+          {% for task in tasks %}
+            <p class="tasktitle"><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></p>
+          {% endfor %}
         {% endif %}
       </div>
     {% endfor %}

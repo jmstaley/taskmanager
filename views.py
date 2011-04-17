@@ -74,14 +74,38 @@ def cal_view(request, year=None, month=None):
         month = now.month
     if month == now.month:
         today = now.day
+
+    month = int(month)
+    year = int(year)
+
     cal = calendar.Calendar()
     month_days = cal.itermonthdays2(year, month)
     dt = datetime(year, month, 1)
-    map_func = lambda d: (d[0], d[1], Task.objects.filter(due_date=datetime(year, month, d[0])))
-    month_day_tasks = map(map_func, month_days)
+    month_day_tasks = []
+    for date, day in month_days:
+        tasks = []
+        if date:
+            tasks = Task.objects.filter(due_date=datetime(year, month, date))
+        month_day_tasks.append((date, day, tasks))
+
+    next_year = year
+    next_month = month+1
+    if month == 12:
+        next_year = year+1
+        next_month = 1
+    prev_year = year
+    prev_month = month-1
+    if month == 1:
+        prev_year = year-1
+        prev_month = 12
+
     return render_to_response('taskmanager/calendar.html',
                               {'day_headers': calendar.day_name,
                                'month': dt.strftime('%B'),
                                'today': today,
+                               'prev_month': prev_month, 
+                               'prev_year': prev_year,
+                               'next_month': next_month, 
+                               'next_year': next_year,
                                'month_days': month_day_tasks},
                               context_instance = RequestContext(request))

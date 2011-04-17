@@ -19,6 +19,7 @@ div.dayheader {
 
 div.day {
   border: 1px solid #000000;
+  height: 100px;
   margin-bottom: 10px;
 }
 
@@ -28,6 +29,10 @@ div.emptyday {
 
 div.today {
   background-color: #7DC6FF;
+}
+
+p.tasktitle {
+  margin: 0;
 }
 
 div.user {
